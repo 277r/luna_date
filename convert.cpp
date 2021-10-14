@@ -6,6 +6,14 @@
 
 
 #include <iostream>
+// std::stoi and std::string are defined here in microsoft ISO c++ 14
+#include <string>
+
+// function declarations
+void print_luna(int ddi, int mmi, int yyyyi, int args);
+
+
+
 
 void getStrings(std::string in, std::string& day, std::string& month, std::string& year){
 	day = in.substr(0, 2);
@@ -15,7 +23,6 @@ void getStrings(std::string in, std::string& day, std::string& month, std::strin
 }
 
 
-int daysPerMonth[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
 
 /*
@@ -28,6 +35,36 @@ int main(int argc, char *argv[]){
 		return 0;
 	}
 	
+
+	bool printday, operateInverted;
+
+	// get input opts
+	while (*(argv[1]) != 0){
+		if (*argv[1] == 'h'){
+			// print help, return
+		}
+		else if (*argv[1] == 'd'){
+			// print day
+			printday = true;
+		}
+		else if (*argv[1] == 'i'){
+			// operate inverted, instead of greg -> luna, do luna -> gegr
+			operateInverted = true;
+		}
+		*(argv[1])++;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
 	// tokenize string by dashes
 	// string would DD-MM-YYYY
 	// WITH ZERO PADDING
@@ -53,7 +90,23 @@ int main(int argc, char *argv[]){
 	mmi = std::stoi(mm);
 	yyyyi = std::stoi(yyyy);
 
-	// declaration of some later used variables
+
+	if (operateInverted){
+
+	}	
+	else {
+		print_luna(ddi, mmi, yyyyi, (printday & 1));
+	}
+
+}
+
+
+int daysPerMonth[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+// 1 1 1970 is on a thursday
+char* daysOfWeek[] = {"thursday", "friday", "saturday", "sunday", "monday", "tuesday", "wednesday", "h"}; 
+void print_luna(int ddi, int mmi, int yyyyi, int args){
+
+// declaration of some later used variables
 	int lunaDays = 0;
 	int lunaMonths = 0;
 	// lunaYears is the same as the input
@@ -118,4 +171,16 @@ int main(int argc, char *argv[]){
 	//std::cout << lunaDays << "-" << lunaMonths<< "-" << yyyyi << std::endl; 
 	printf("%02d-%02d-%4d\n", lunaDays, lunaMonths, yyyyi);
 
+
+	// if argument is 1
+	if (args & 1){
+		// find day
+		if (lunaMonths == 14){
+			printf("%s\n", daysOfWeek[7]);
+		}
+		else {
+			printf("%s\n", daysOfWeek[(lunaDays -1) % 7]);
+		}
+
+	}
 }
