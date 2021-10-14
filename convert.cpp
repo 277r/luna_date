@@ -8,6 +8,8 @@
 #include <iostream>
 // std::stoi and std::string are defined here in microsoft ISO c++ 14
 #include <string>
+#include <string.h>
+#include <stdio.h>
 
 // function declarations
 void print_luna(int ddi, int mmi, int yyyyi, int args);
@@ -31,7 +33,13 @@ void getStrings(std::string in, std::string& day, std::string& month, std::strin
 int main(int argc, char *argv[]){
 	// handle args
 	if (argc < 3){
-		std::cout << "error: not enough arguments provided";
+		// help does not require a third argument, this is the only exception there currently is
+		if (argc > 1 && strcmp(argv[1], "h") == 0){
+			std::cout << "use `lunaconvert <OPTIONS> dd-mm-yyyy'\ndates MUST be zero padded\n";
+			std::cout << "multiple options are allowed\npossible options:\nh\tshow help\nd\tshows what day it is on the output date\ni\tinverted operation, converts dates backs\n";
+			return 0;
+		}
+		std::cout << "error: not enough arguments provided\nuse lunaconvert h to show a list of arguments\n";
 		return 0;
 	}
 	
@@ -40,10 +48,7 @@ int main(int argc, char *argv[]){
 
 	// get input opts
 	while (*(argv[1]) != 0){
-		if (*argv[1] == 'h'){
-			// print help, return
-		}
-		else if (*argv[1] == 'd'){
+		 if (*argv[1] == 'd'){
 			// print day
 			printday = true;
 		}

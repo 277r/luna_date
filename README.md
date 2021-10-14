@@ -14,8 +14,8 @@ the n stands for normal operation
 ### features:
 * convert normal calendar to the other system
 * leap years work
+* show day of the week
 ### future features:
-* add day of the week
 * convert back
 
 
