@@ -13,6 +13,8 @@
 
 // function declarations
 void print_luna(int ddi, int mmi, int yyyyi, int args);
+// picture of greg = uggc://vzntrf2.jvxvn.abpbbxvr.arg/__po20110717141238/qbnjx/vzntrf/4/4p/Qvnel-bs-n-jvzcl-xvq-Tert.wct
+void print_greg(int ddi, int mmi, int yyyyi, int args);
 
 
 
@@ -97,7 +99,7 @@ int main(int argc, char *argv[]){
 
 
 	if (operateInverted){
-
+		print_greg(ddi, mmi, yyyyi, (printday & 1));
 	}	
 	else {
 		print_luna(ddi, mmi, yyyyi, (printday & 1));
@@ -188,4 +190,21 @@ void print_luna(int ddi, int mmi, int yyyyi, int args){
 		}
 
 	}
+}
+
+
+void print_greg(int ddi, int mmi, int yyyyi, int args){
+	int greg_days = (mmi -1) * 28 + ddi;
+	int greg_months = 1;
+
+	// turn days into months
+	while (greg_days > daysPerMonth[greg_months]){
+		greg_days -= daysPerMonth[greg_months];
+		greg_months++;
+	}
+	greg_days--;
+
+	// year is alays the same
+	printf("%02d-%02d-%4d\n", greg_days, greg_months, yyyyi);
+
 }
