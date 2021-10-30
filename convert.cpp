@@ -194,15 +194,45 @@ void print_luna(int ddi, int mmi, int yyyyi, int args){
 
 
 void print_greg(int ddi, int mmi, int yyyyi, int args){
+	
+
+	// leapyear check stage 1: check if the year is a leapyear
+	bool leapYear;
+	if (
+		// leap year happens once every 4 years
+		((yyyyi % 4 == 0) && 
+		// but not every 100 years
+		(yyyyi % 100 != 0)) || 
+		// but it does again every 400 years
+		(yyyyi % 400 == 0))
+		leapYear = true;
+	
+	
+
+
 	int greg_days = (mmi -1) * 28 + ddi;
 	int greg_months = 1;
 
-	// turn days into months
+
+
+	// turn days into months 
+	// 
 	while (greg_days > daysPerMonth[greg_months]){
-		greg_days -= daysPerMonth[greg_months];
-		greg_months++;
+		 {
+			// take months from the days until days are smaller than the time there is
+			greg_days -= daysPerMonth[greg_months];
+			if (greg_months == 2 && leapYear){
+				greg_days--;
+			}
+			greg_months++;
+		}
 	}
-	greg_days--;
+	// the code block here above has one date that will make an exception and it will be harder to fix that inside of the block than to fix it here
+	if (greg_months == 3 && greg_days == 0){
+		greg_months--;
+		greg_days = 29;
+	}
+	
 
 	// year is alays the same
 	printf("%02d-%02d-%4d\n", greg_days, greg_months, yyyyi);
