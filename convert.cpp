@@ -209,8 +209,10 @@ void print_greg(int ddi, int mmi, int yyyyi, int args){
 	
 	
 
-
+	
 	int greg_days = (mmi -1) * 28 + ddi;
+	// will be used later
+	int diffs = greg_days;
 	int greg_months = 1;
 
 
@@ -236,5 +238,28 @@ void print_greg(int ddi, int mmi, int yyyyi, int args){
 
 	// year is alays the same
 	printf("%02d-%02d-%4d\n", greg_days, greg_months, yyyyi);
+
+
+	// print day
+	if (args & 1){
+		yyyyi--;
+		// january first on a thursday will be january second a year later, in a leap year this will be 2 years
+		while (yyyyi > 1970){
+			if (
+			// leap year happens once every 4 years
+			((yyyyi % 4 == 0) && 
+			// but not every 100 years
+			(yyyyi % 100 != 0)) || 
+			// but it does again every 400 years
+			(yyyyi % 400 == 0))
+			diffs += 2;
+			else diffs += 1;
+
+			yyyyi--;
+		}
+		// get normal day of week
+		// now apply the diffs to the thing
+		printf("%s\n", daysOfWeek[diffs % 7]);
+	}
 
 }
