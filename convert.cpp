@@ -46,7 +46,7 @@ int main(int argc, char *argv[]){
 	}
 	
 
-	bool printday, operateInverted;
+	bool printday = false, operateInverted = false;
 
 	// get input opts
 	while (*(argv[1]) != 0){
